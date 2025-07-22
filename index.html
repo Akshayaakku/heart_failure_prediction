@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Heart Failure Prediction</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Heart Failure Risk Predictor</h2>
+
+<form onsubmit="predictRisk(); return false;">
+  <input type="number" id="age" placeholder="Age" required>
+  <input type="number" id="anaemia" placeholder="Anaemia (0 or 1)" min="0" max="1" required>
+  <input type="number" id="creatinine_phosphokinase" placeholder="CPK Level" required>
+  <input type="number" id="diabetes" placeholder="Diabetes (0 or 1)" min="0" max="1" required>
+  <input type="number" id="ejection_fraction" placeholder="Ejection Fraction (%)" required>
+  <input type="number" id="high_blood_pressure" placeholder="High BP (0 or 1)" min="0" max="1" required>
+  <input type="number" id="platelets" placeholder="Platelets Count" required>
+  <input type="number" id="serum_creatinine" placeholder="Serum Creatinine" required>
+  <input type="number" id="serum_sodium" placeholder="Serum Sodium" required>
+  <input type="number" id="sex" placeholder="Sex (0 = Female, 1 = Male)" min="0" max="1" required>
+  <input type="number" id="smoking" placeholder="Smoking (0 or 1)" min="0" max="1" required>
+  <input type="number" id="time" placeholder="Follow-up Time (days)" required>
+
+  <button type="submit">Predict Risk</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+  function predictRisk() {
+    const age = parseFloat(document.getElementById("age").value);
+    const anaemia = parseInt(document.getElementById("anaemia").value);
+    const cpk = parseFloat(document.getElementById("creatinine_phosphokinase").value);
+    const diabetes = parseInt(document.getElementById("diabetes").value);
+    const ef = parseFloat(document.getElementById("ejection_fraction").value);
+    const hbp = parseInt(document.getElementById("high_blood_pressure").value);
+    const platelets = parseFloat(document.getElementById("platelets").value);
+    const sc = parseFloat(document.getElementById("serum_creatinine").value);
+    const ss = parseFloat(document.getElementById("serum_sodium").value);
+    const sex = parseInt(document.getElementById("sex").value);
+    const smoking = parseInt(document.getElementById("smoking").value);
+    const time = parseFloat(document.getElementById("time").value);
+
+    // Simple rule-based logic to simulate prediction
+    let score = 0;
+
+    if (age > 60) score++;
+    if (ef < 35) score++;
+    if (sc > 1.5) score++;
+    if (platelets < 250000) score++;
+    if (ss < 130) score++;
+    if (hbp === 1) score++;
+    if (diabetes === 1) score++;
+    if (anaemia === 1) score++;
+    if (smoking === 1) score++;
+    if (cpk > 500) score++;
+
+    const result = document.getElementById("result");
+
+    if (score >= 5) {
+      result.innerHTML = "⚠️ <b>High Risk</b> of Heart Failure.";
+      result.style.color = "red";
+    } else {
+      result.innerHTML = "✅ <b>Low Risk</b> of Heart Failure.";
+      result.style.color = "green";
+    }
+  }
+</script>
+
+</body>
+</html>
